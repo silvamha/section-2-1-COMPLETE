@@ -7,20 +7,30 @@
 
   <body>
     <div id="app" v-cloak>
-      <p>{{ fullName() }}</p>
+      <p>{{ fullName }}</p>
       <p><a v-bind:href="url" target="_blank">Google</a></p>
       <p v-html="raw_url"></p>
-      <p>{{ age }}</p>
+      <p :value="age" @input="updateAge">{{ typeof age }}</p>
       <hr />
 
       <label for="">First Name</label>
-      <input type="text" v-model="firstName" />
+      <input type="text" v-model.lazy.trim="firstName" />
+
+      <label for="">Middle Name</label>
+      <input type="text" @keyup.enter.ctrl="updateMiddleName" />
 
       <label for="">Last Name</label>
-      <input type="text" v-model="lastName" />
+      <input
+        type="text"
+        :value="lastName"
+        @input.prevent="updateLastName('Last name event triggered!', $event)"
+      />
 
-      <button type="button" v-on:click="increment">Increment</button>
-      <button type="button" v-on:click="age--">Decrement</button>
+      <label for="">Age</label> <br />
+      <input type="number" v-model.number="age" /> <br />
+
+      <button type="button" @click="increment">Increment</button>
+      <button type="button" @click="age--">Decrement</button>
     </div>
 
     <!-- <div id="app2">
